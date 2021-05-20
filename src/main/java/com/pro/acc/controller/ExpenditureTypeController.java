@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pro.acc.dto.ExpenditureTypeDTO;
+import com.pro.acc.dto.ExpenditureTypeDTOO;
 import com.pro.acc.service.ExpenditureTypeService;
 
 @RestController
@@ -28,5 +29,10 @@ public class ExpenditureTypeController {
 	@GetMapping("/type/{id}")
 	public List<ExpenditureTypeDTO> getType(@PathVariable Long id){
 		return this.expenditureTypeService.getTypes(id);
+	}
+	
+	@GetMapping("/all")
+	public List<ExpenditureTypeDTOO> getAllTypes(){
+		return this.expenditureTypeService.geyAll();
 	}
 }
