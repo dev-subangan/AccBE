@@ -12,6 +12,8 @@ public class ExpenditureDTO {
 
 	private long typeId;
 
+	private String type;
+
 	private String note;
 
 	public Long getId() {
@@ -52,6 +54,14 @@ public class ExpenditureDTO {
 
 	public void setTypeId(long typeId) {
 		this.typeId = typeId;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public String getNote() {

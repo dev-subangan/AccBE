@@ -27,7 +27,6 @@ public class ExpenditureServiceImpl implements ExpenditureService {
 
 	@Override
 	public ResultJson<String, String> save(ExpenditureDTO expenditureDTO) throws ParseException {
-
 		ExpenditureType expenditureType = new ExpenditureType();
 		expenditureType.setId(expenditureDTO.getTypeId());
 
@@ -50,14 +49,22 @@ public class ExpenditureServiceImpl implements ExpenditureService {
 				.findByExpenditureDate(getMyDateFormat().parse(date)).stream().map(expenditure -> {
 					ExpenditureDTO expenditureDTO = new ExpenditureDTO();
 					expenditureDTO.setId(expenditure.getId());
-					expenditureDTO.setDate(expenditure.getDate().toString());
-					expenditureDTO.setTypeId(expenditure.getType().getId());
+					expenditureDTO.setType(getType(expenditure.getType(), "").replaceAll(".$", ""));
 					expenditureDTO.setNote(expenditure.getNote());
 					expenditureDTO.setAmount(expenditure.getAmount());
 					return expenditureDTO;
 				}).sorted(Comparator.comparing(ExpenditureDTO::getId).reversed()).collect(Collectors.toList());
 
 		return (new ResultJson<String, List<ExpenditureDTO>>(AccConstant.STATUS_OK, expenditureDTOList));
+	}
+
+	private String getType(ExpenditureType expenditureType, String type) {
+		type = expenditureType.getSubType().getName() + "." + type;
+		if (expenditureType.getType() == null) {
+			return type;
+		} else {
+			return getType(expenditureType.getType(), type);
+		}
 	}
 
 	@Override

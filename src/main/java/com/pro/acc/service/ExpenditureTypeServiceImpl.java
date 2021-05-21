@@ -14,6 +14,8 @@ import com.pro.acc.entity.ExpenditureMasterType;
 import com.pro.acc.entity.ExpenditureType;
 import com.pro.acc.repository.ExpenditureMasterTypeRepository;
 import com.pro.acc.repository.ExpenditureTypeRepository;
+import com.pro.acc.util.AccConstant;
+import com.pro.acc.util.ResultJson;
 
 @Service
 public class ExpenditureTypeServiceImpl implements ExpenditureTypeService {
@@ -93,6 +95,12 @@ public class ExpenditureTypeServiceImpl implements ExpenditureTypeService {
 				return new ExpenditureTypeDTO(e.getId(), e.getSubType().getName());
 			}).collect(Collectors.toList());
 		}
+	}
+	
+	@Override
+	public ResultJson<String, String> addMasterType(String masterType){
+		expenditureMasterTypeRepository.save(new ExpenditureMasterType(masterType));
+		return new ResultJson<>(AccConstant.STATUS_OK, masterType);
 	}
 
 	@Override
