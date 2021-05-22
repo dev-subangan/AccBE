@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pro.acc.dto.ExpenditureTypeDTO;
 import com.pro.acc.dto.ExpenditureTypeDTOO;
 import com.pro.acc.service.ExpenditureTypeService;
 import com.pro.acc.util.ResultJson;
@@ -25,23 +24,18 @@ public class ExpenditureTypeController {
 	@Autowired
 	private ExpenditureTypeService expenditureTypeService;
 
-	@GetMapping("/test")
-	public String test(){
-		return this.expenditureTypeService.test();
-	}
-	
-	@GetMapping("/type/{id}")
-	public List<ExpenditureTypeDTO> getType(@PathVariable Long id){
-		return this.expenditureTypeService.getTypes(id);
-	}
-	
 	@PostMapping("/add")
-	public ResultJson<String, String> addMasterType(@RequestBody Map<String,String> masterTypeObj){
+	public ResultJson<String, String> addMasterType(@RequestBody Map<String, String> masterTypeObj) {
 		return this.expenditureTypeService.addMasterType(masterTypeObj.get("masterType"));
 	}
-	
+
 	@GetMapping("/all")
-	public List<ExpenditureTypeDTOO> getAllTypes(){
+	public List<ExpenditureTypeDTOO> getAllTypes() {
 		return this.expenditureTypeService.geyAll();
+	}
+
+	@GetMapping("/{id}")
+	public ResultJson<String, String> getAllTypes(@PathVariable long id) {
+		return this.expenditureTypeService.getTypeById(id);
 	}
 }
