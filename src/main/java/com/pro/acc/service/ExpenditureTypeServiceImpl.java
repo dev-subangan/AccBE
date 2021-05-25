@@ -3,6 +3,7 @@ package com.pro.acc.service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -35,16 +36,25 @@ public class ExpenditureTypeServiceImpl implements ExpenditureTypeService {
 
 	@Override
 	public ResultJson<String, List<ExpenditureMasterTypeDTO>> getRemainingMasterTypesForType(long typeId) {
-		Set<Long> existMasterTypeIdList = expenditureTypeRepository
-				.findByType(expenditureTypeRepository.findById(typeId).get()).stream().map(expenditureType -> {
-					return expenditureType.getSubType().getId();
-				}).collect(Collectors.toSet());
+
+		Optional<ExpenditureType> expenditureTypeOpt = expenditureTypeRepository.findById(typeId);
+		Set<Long> existMasterTypeIdList;
+
+		if (expenditureTypeOpt.isPresent()) {
+			existMasterTypeIdList = expenditureTypeRepository.findByType(expenditureTypeOpt.get()).stream()
+					.map(et -> et.getSubType().getId()).collect(Collectors.toSet());
+		} else if (typeId == 0) {
+			existMasterTypeIdList = expenditureTypeRepository.findByTypeIsNull().stream()
+					.map(et -> et.getSubType().getId()).collect(Collectors.toSet());
+		} else {
+			return new ResultJson<>(AccConstant.STATUS_FAILED, new ArrayList<>());
+		}
 
 		List<ExpenditureMasterTypeDTO> remainingMasterTypeList = expenditureMasterTypeRepository.findAll().stream()
 				.filter(expenditureMasterType -> !existMasterTypeIdList.contains(expenditureMasterType.getId()))
-				.map(expenditureMasterType -> {
-					return new ExpenditureMasterTypeDTO(expenditureMasterType.getId(), expenditureMasterType.getName());
-				}).collect(Collectors.toList());
+				.map(expenditureMasterType -> new ExpenditureMasterTypeDTO(expenditureMasterType.getId(),
+						expenditureMasterType.getName()))
+				.collect(Collectors.toList());
 
 		return new ResultJson<>(AccConstant.STATUS_OK, remainingMasterTypeList);
 	}
@@ -52,13 +62,23 @@ public class ExpenditureTypeServiceImpl implements ExpenditureTypeService {
 	@Override
 	public ResultJson<String, String> addType(long parentTypeId, long masterTypeId) {
 
+		Optional<ExpenditureMasterType> expenditureMasterTypeOpt = expenditureMasterTypeRepository
+				.findById(masterTypeId);
+		Optional<ExpenditureType> expenditureTypeOpt = expenditureTypeRepository.findById(parentTypeId);
+
 		ExpenditureType expenditureType = new ExpenditureType();
-		expenditureType.setType(expenditureTypeRepository.findById(parentTypeId).get());
-		expenditureType.setSubType(expenditureMasterTypeRepository.findById(masterTypeId).get());
 
-		expenditureTypeRepository.save(expenditureType);
+		if (expenditureTypeOpt.isPresent()) {
+			expenditureType.setType(expenditureTypeOpt.get());
+		}
 
-		return new ResultJson<>(AccConstant.STATUS_OK);
+		if (expenditureMasterTypeOpt.isPresent()) {
+			expenditureType.setSubType(expenditureMasterTypeOpt.get());
+			expenditureTypeRepository.save(expenditureType);
+			return new ResultJson<>(AccConstant.STATUS_OK);
+		}
+
+		return new ResultJson<>(AccConstant.STATUS_FAILED);
 	}
 
 	@Override
