@@ -26,7 +26,7 @@ public class ExpenditureTypeController {
 	private ExpenditureTypeService expenditureTypeService;
 
 	@PostMapping("/addMasterType")
-	public ResultJson<String, String> addMasterType(@RequestBody Map<String, String> masterTypeObj) {
+	public ResultJson<String, ExpenditureMasterTypeDTO> addMasterType(@RequestBody Map<String, String> masterTypeObj) {
 		return this.expenditureTypeService.addMasterType(masterTypeObj.get("masterType"));
 	}
 

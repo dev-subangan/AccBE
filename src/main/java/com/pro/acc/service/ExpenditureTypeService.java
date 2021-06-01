@@ -8,7 +8,7 @@ import com.pro.acc.util.ResultJson;
 
 public interface ExpenditureTypeService {
 
-	ResultJson<String, String> addMasterType(String masterType);
+	ResultJson<String, ExpenditureMasterTypeDTO> addMasterType(String masterType);
 
 	ResultJson<String, List<ExpenditureMasterTypeDTO>> getRemainingMasterTypesForType(long typeId);
 

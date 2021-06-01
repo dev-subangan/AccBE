@@ -59,7 +59,7 @@ public class ExpenditureServiceImpl implements ExpenditureService {
 	}
 
 	private String getType(ExpenditureType expenditureType, String type) {
-		type = expenditureType.getSubType().getName() + "." + type;
+		type = expenditureType.getMasterType().getName() + "." + type;
 		if (expenditureType.getType() == null) {
 			return type;
 		} else {

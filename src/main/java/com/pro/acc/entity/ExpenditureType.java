@@ -19,14 +19,14 @@ public class ExpenditureType {
 	private ExpenditureType type;
 
 	@ManyToOne
-	private ExpenditureMasterType subType;
-	
+	private ExpenditureMasterType masterType;
+
 	public ExpenditureType() {
 	}
 
-	public ExpenditureType(ExpenditureType type, ExpenditureMasterType subType) {
+	public ExpenditureType(ExpenditureType type, ExpenditureMasterType masterType) {
 		this.type = type;
-		this.subType = subType;
+		this.masterType = masterType;
 	}
 
 	public Long getId() {
@@ -45,11 +45,12 @@ public class ExpenditureType {
 		this.type = type;
 	}
 
-	public ExpenditureMasterType getSubType() {
-		return subType;
+	public ExpenditureMasterType getMasterType() {
+		return masterType;
 	}
 
-	public void setSubType(ExpenditureMasterType subType) {
-		this.subType = subType;
+	public void setMasterType(ExpenditureMasterType masterType) {
+		this.masterType = masterType;
 	}
+
 }

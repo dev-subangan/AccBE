@@ -4,23 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ExpenditureTypeDTO {
-	
+
 	private long id;
-	
+
 	private String name;
-	
-	private List<ExpenditureTypeDTO> subTypes;
-	
+
+	private List<ExpenditureTypeDTO> masterTypes;
+
 	public ExpenditureTypeDTO(long id, String name) {
 		this.id = id;
 		this.name = name;
-		this.subTypes = new ArrayList<>();
+		this.masterTypes = new ArrayList<>();
 	}
 
-	public ExpenditureTypeDTO(int id, String name, List<ExpenditureTypeDTO> subTypes) {
+	public ExpenditureTypeDTO(int id, String name, List<ExpenditureTypeDTO> masterTypes) {
 		this.id = id;
 		this.name = name;
-		this.subTypes = subTypes;
+		this.masterTypes = masterTypes;
 	}
 
 	public long getId() {
@@ -39,14 +39,12 @@ public class ExpenditureTypeDTO {
 		this.name = name;
 	}
 
-	public List<ExpenditureTypeDTO> getSubTypes() {
-		return subTypes;
+	public List<ExpenditureTypeDTO> getMasterTypes() {
+		return masterTypes;
 	}
 
-	public void setSubTypes(List<ExpenditureTypeDTO> subTypes) {
-		this.subTypes = subTypes;
+	public void setMasterTypes(List<ExpenditureTypeDTO> masterTypes) {
+		this.masterTypes = masterTypes;
 	}
-	
-	
 
 }
