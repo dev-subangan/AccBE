@@ -106,8 +106,7 @@ public class ExpenditureTypeServiceImpl implements ExpenditureTypeService {
 
 	@Override
 	public ResultJson<String, String> getTypeById(long id) {
-		return new ResultJson<>(AccConstant.STATUS_OK,
-				getType(expenditureTypeRepository.findById(id).get(), "").replaceAll(".$", ""));
+		return new ResultJson<>(AccConstant.STATUS_OK, getType(expenditureTypeRepository.findById(id).get(), ""));
 	}
 
 	private String getType(ExpenditureType expenditureType, String type) {
