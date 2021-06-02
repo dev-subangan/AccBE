@@ -81,8 +81,8 @@ public class ExpenditureTypeServiceImpl implements ExpenditureTypeService {
 
 		if (expenditureMasterTypeOpt.isPresent()) {
 			expenditureType.setMasterType(expenditureMasterTypeOpt.get());
-			expenditureTypeRepository.save(expenditureType);
-			return new ResultJson<>(AccConstant.STATUS_OK);
+			ExpenditureType savedExpenditureType = expenditureTypeRepository.save(expenditureType);
+			return new ResultJson<>(AccConstant.STATUS_OK, savedExpenditureType.getId().toString());
 		}
 
 		return new ResultJson<>(AccConstant.STATUS_FAILED);
