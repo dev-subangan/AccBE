@@ -9,18 +9,18 @@ public class ExpenditureTypeDTO {
 
 	private String name;
 
-	private List<ExpenditureTypeDTO> masterTypes;
+	private List<ExpenditureTypeDTO> subTypes;
 
 	public ExpenditureTypeDTO(long id, String name) {
 		this.id = id;
 		this.name = name;
-		this.masterTypes = new ArrayList<>();
+		this.subTypes = new ArrayList<>();
 	}
 
-	public ExpenditureTypeDTO(int id, String name, List<ExpenditureTypeDTO> masterTypes) {
+	public ExpenditureTypeDTO(int id, String name, List<ExpenditureTypeDTO> subTypes) {
 		this.id = id;
 		this.name = name;
-		this.masterTypes = masterTypes;
+		this.subTypes = subTypes;
 	}
 
 	public long getId() {
@@ -39,12 +39,12 @@ public class ExpenditureTypeDTO {
 		this.name = name;
 	}
 
-	public List<ExpenditureTypeDTO> getMasterTypes() {
-		return masterTypes;
+	public List<ExpenditureTypeDTO> getSubTypes() {
+		return subTypes;
 	}
 
-	public void setMasterTypes(List<ExpenditureTypeDTO> masterTypes) {
-		this.masterTypes = masterTypes;
+	public void setSubTypes(List<ExpenditureTypeDTO> subTypes) {
+		this.subTypes = subTypes;
 	}
 
 }

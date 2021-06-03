@@ -122,11 +122,11 @@ public class ExpenditureTypeServiceImpl implements ExpenditureTypeService {
 
 		for (ExpenditureTypeDTO expenditureTypeDTO : list) {
 			if (expenditureTypeDTO.getId() == expenditureType.getType().getId()) {
-				expenditureTypeDTO.getMasterTypes().add(
+				expenditureTypeDTO.getSubTypes().add(
 						new ExpenditureTypeDTO(expenditureType.getId(), expenditureType.getMasterType().getName()));
 				break;
 			} else {
-				travel(expenditureTypeDTO.getMasterTypes(), expenditureType);
+				travel(expenditureTypeDTO.getSubTypes(), expenditureType);
 			}
 		}
 	}
